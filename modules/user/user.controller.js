@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const userModel = require('./user.model');
+const userModel = mongoose.model('user');
 const _ = require('lodash');
-
+const jwt = require('jsonwebtoken');
 
 
 exports.signUp = async ctx => {
@@ -24,4 +24,23 @@ exports.login = async ctx => {
   if (!user) {
     return (ctx.body = { success: false, message: '邮箱或密码错误' });
   }
+
+  const isCorrect = await user.validatePassword(password);
+
+  if (!isCorrect) {
+    return (ctx.body = { success: false, message: '用户名或密码错误' });
+  }
+
+  const payload = { id: user.id };
+  const token = jwt.sign(payload, 'romy');
+
+  ctx.body = {
+    success: true,
+    data: { user: _.omit(user.toObject(), ['password', 'salt']), token }
+  };
+
+};
+
+exports.getInfo = async ctx => {
+  console.log(ctx.state);
 };
