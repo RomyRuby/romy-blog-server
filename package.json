@@ -1,0 +1,25 @@
+{
+  "name": "romy-blog-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "eslint .eslintrc.js --fix ./ & nodemon",
+    "start": "node index"
+  },
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-router": "^7.4.0",
+    "koa-cors": "^0.0.16",
+    "glob": "^7.1.2",
+    "mongoose": "^5.2.9",
+    "koa-bodyparser": "^4.2.1",
+    "lodash": "4.17.13",
+    "jsonwebtoken": "^8.5.0"
+
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1"
+  }
+}
