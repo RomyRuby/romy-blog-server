@@ -3,5 +3,9 @@ const { checkRoles } = require('../../tools/acl');
 
 
 module.exports = router => {
-  router.get('/users/info', checkRoles('test'), userController.getInfo);
+  router
+    .post('/users/login', userController.login)
+    .post('/users', userController.signUp)
+    .get('/users', checkRoles('admin'), userController.list)
+    .get('/users/info', checkRoles('user'), userController.getInfo);
 };
