@@ -4,6 +4,7 @@ const Router = require('koa-router');
 const cors = require('koa-cors');
 const glob = require('glob');
 const bodyParser = require('koa-bodyparser');
+const passport = require('koa-passport');
 
 const router = new Router();
 const app = new Koa();
@@ -38,11 +39,17 @@ const initRoutes = () => {
   app.use(router.routes()).use(router.allowedMethods());
 };
 
-
+const initPassport = () => {
+  const files = glob.sync(path.resolve('./modules/*/*.passport.js'));
+  files.forEach(file => require(file)(passport));
+  app.use(passport.initialize());
+  app.use(passport.session());
+};
 
 exports.init = () => {
   initMiddleware();
   initLog();
   initRoutes();
+  initPassport();
 };
 
