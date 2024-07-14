@@ -14,6 +14,10 @@ const UserSchema = new Schema(
       unique: true,
       max: 3
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
     email: {
       type: String,
       required: '请填写邮箱',
