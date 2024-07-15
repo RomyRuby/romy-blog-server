@@ -82,5 +82,10 @@ exports.login = async ctx => {
 };
 
 exports.getInfo = async ctx => {
-  console.log(ctx.state);
+  const user = ctx.state.user;
+
+  ctx.body = {
+    success: true,
+    data: _.omit(user.toObject(), ['password', 'salt'])
+  };
 };

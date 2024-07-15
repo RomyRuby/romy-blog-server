@@ -8,7 +8,7 @@ var jwtOptions = {};
 jwtOptions.jwtFromRequest = function (ctx) {
   var token = null;
   if (ctx && ctx.header) {
-    token = ctx.header['authorization'];
+    token = ctx.header['Authorization'];
   }
   return token;
 };

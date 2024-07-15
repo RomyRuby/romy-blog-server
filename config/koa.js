@@ -5,6 +5,7 @@ const cors = require('koa-cors');
 const glob = require('glob');
 const bodyParser = require('koa-bodyparser');
 const passport = require('koa-passport');
+const session = require('koa-session');
 
 const router = new Router();
 const app = new Koa();
@@ -21,6 +22,15 @@ exports.router = router;
 
 const initMiddleware = () => {
   app.use(cors({ credentials: true }));
+  app.use(
+    session(
+      {
+        key: 'koa-server',
+        maxAge: 1000 * 60 * 60 * 24 * 7
+      },
+      app
+    )
+  );
   app.use(bodyParser());
 };
 
@@ -33,18 +43,20 @@ const initLog = () => {
   });
 };
 
-const initRoutes = () => {
-  const files = glob.sync(path.resolve('./modules/*/*.route.js'));
-  files.forEach(file => require(file)(router));
-  app.use(router.routes()).use(router.allowedMethods());
-};
-
 const initPassport = () => {
   const files = glob.sync(path.resolve('./modules/*/*.passport.js'));
   files.forEach(file => require(file)(passport));
   app.use(passport.initialize());
   app.use(passport.session());
 };
+
+const initRoutes = () => {
+  const files = glob.sync(path.resolve('./modules/*/*.route.js'));
+  files.forEach(file => require(file)(router));
+  app.use(router.routes()).use(router.allowedMethods());
+};
+
+
 
 exports.init = () => {
   initMiddleware();

@@ -8,15 +8,18 @@
     "start": "node index"
   },
   "dependencies": {
-    "koa": "^2.5.2",
-    "koa-router": "^7.4.0",
-    "koa-cors": "^0.0.16",
+    "bcrypt": "^3.0.4",
     "glob": "^7.1.2",
-    "mongoose": "^5.2.9",
-    "koa-bodyparser": "^4.2.1",
-    "lodash": "4.17.13",
     "jsonwebtoken": "^8.5.0",
-    "bcrypt": "^3.0.4"
+    "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-cors": "^0.0.16",
+    "koa-passport": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.2",
+    "lodash": "4.17.13",
+    "mongoose": "^5.2.9",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
