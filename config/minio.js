@@ -35,3 +35,22 @@ exports.uploadFile = (fileName, file) => {
   });
 };
 
+
+exports.removeFile = (fileName, versionId) => {
+  return new Promise((resolve, reject) => {
+    minioClient
+      .removeObject(
+        'romy-blog',
+        fileName,
+        versionId ? { versionId: versionId } : {} //如果没有开启历史版本，这行可以去掉，默认就是最新文件
+      )
+      .then((err) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+  });
+};
+

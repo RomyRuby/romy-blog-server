@@ -5,5 +5,6 @@ const photos = require('./photo.controller');
  */
 module.exports = router => {
   router.get('/photos', photos.list)
-    .post('/photo', photos.create);
+    .post('/photo', photos.create)
+    .delete('/photo/:id', photos.delete);
 };

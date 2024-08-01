@@ -10,7 +10,8 @@ module.exports = {
     const getData = Photo.find().sort('-created');
     const getCount = Photo.count();
     const [list, count] = await Promise.all([getData, getCount]);
-    ctx.body = { success: true, data: { list, count } };
+    const photoList = list.map(item => { return { ...item._doc, imageAddress: 'http://47.98.122.17:9000/romy-blog/' + item.fileName + '?versionId=' + item.fileInfo.versionId }; });
+    ctx.body = { success: true, data: { list: photoList, count } };
   },
 
   // async article(ctx) {
@@ -44,13 +45,15 @@ module.exports = {
   //   ctx.body = { success: true, data: article, message: '修改成功' };
   // },
 
-  // async delete(ctx) {
-  //   try {
-  //     await Article.deleteOne({ _id: ctx.params.id });
-  //     ctx.body = { success: true };
-  //   } catch (error) {
-  //     ctx.body = { success: false };
-  //   }
-
-  // },
+  async delete(ctx) {
+    const getPhoto = Photo.findById(ctx.params.id);
+    const photoContent = await getPhoto;
+    try {
+      await Photo.deleteOne({ _id: ctx.params.id });
+      await minio.removeFile(photoContent.fileName, photoContent.fileInfo.versionId);
+      ctx.body = { success: true };
+    } catch (error) {
+      ctx.body = { success: false };
+    }
+  },
 };
