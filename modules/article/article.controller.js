@@ -23,12 +23,11 @@ module.exports = {
     const articleContent = ctx.request.body;
     const article = await Article.create(Object.assign(articleContent));
     ctx.body = { success: true, data: article, message: '保存成功' };
-    console.log(ctx);
   },
 
   async update(ctx) {
     const articleContent = ctx.request.body;
-    const article = await Article.findByIdAndUpdate(articleContent.id, articleContent, { new: true });
+    const article = await Article.findByIdAndUpdate(articleContent._id, articleContent, { new: true });
     ctx.body = { success: true, data: article, message: '修改成功' };
   },
 

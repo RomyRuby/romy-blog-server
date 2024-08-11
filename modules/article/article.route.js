@@ -10,6 +10,6 @@ module.exports = router => {
   router.get('/articles', article.list)
     .get('/article/:id', article.article)
     .post('/articles', article.create)
-    .put('/articles', article.update)
+    .put('/article', article.update)
     .delete('/article/:id', article.delete);
 };
