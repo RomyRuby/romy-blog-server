@@ -13,6 +13,8 @@ exports.start = async () => {
   } catch (err) {
     console.error(err);
   }
+
+
   // 响应
   app.use(ctx => {
     ctx.body = 'Hello Koa';
